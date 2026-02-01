@@ -1,6 +1,7 @@
 #include <BLEDevice.h>
 #include <BLEUtils.h>
 #include <BLEServer.h>
+#include <Arduino.h>
 
 // ======== BLE UUIDs ========
 #define SERVICE_UUID        "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
@@ -46,7 +47,7 @@ class MyServerCallbacks : public BLEServerCallbacks {
 
 class MyCallbacks : public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic* pCharacteristic) override {
-    String value = pCharacteristic->getValue();
+    String value = String(pCharacteristic->getValue().c_str());
     if (value.length() > 0) {
       Serial.println("=== Command Received ===");
       Serial.println("Raw: " + value);
